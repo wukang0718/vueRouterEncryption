@@ -2,7 +2,7 @@
 
 *   使用：
 
-    *   将`utils`文件夹放入项目 **（最好是放在router目录下 ）** 中，在router的初始化文件中，引入`utils/query.js`的`stringifyQuery`和`parseQuery`方法，在`new VueRouter是时候传递参数`，
+    *   将`utils`文件夹放入项目 **（最好是放在router目录下 ）** 中，在router的初始化文件中，引入`utils/query.js`的`stringifyQuery`和`parseQuery`方法，在`new VueRouter`是时候传递参数，
 
     *   修改`utils/encryption.js`中的`baseCryptoCode`设置每个项目唯一的值
     
