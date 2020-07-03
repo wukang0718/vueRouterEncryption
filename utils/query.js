@@ -47,7 +47,7 @@ export const stringifyQuery = obj => {
 }
 
 /**
- * 解密 解析 字符串参数
+ * 解密  反序列化字符串参数
  * @param {String}} query 
  */
 export const parseQuery = query => {

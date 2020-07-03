@@ -29,6 +29,11 @@ export const getEncrypt = (key, cryptoCode) => {
     }).toString();
 }
 
+/**
+ * 加密后转base64
+ * @param {String}} key 
+ * @param {String} cryptoCode 
+ */
 export const getEncryptToBase64 = (key, cryptoCode) => {
     let encryptStr = getEncrypt(key, cryptoCode);
     let wordArray = CryptoJS.enc.Utf8.parse(encryptStr);

@@ -1,5 +1,53 @@
 ##  vue-router 插件，对vue-router使用中query参数做自动加密、解密
 
+*   使用：
+
+    *   将`utils`文件夹放入项目 **（最好是放在router目录下 ）** 中，在router的初始化文件中，引入`utils/query.js`的`stringifyQuery`和`parseQuery`方法，在`new VueRouter是时候传递参数`，
+
+    *   修改`utils/encryption.js`中的`baseCryptoCode`设置每个项目唯一的值
+    
+    例：（参考[index.js](https://github.com/wukang0718/vueRouterEncryption/blob/master/index.js)）
+
+    ```
+        import Vue from "vue"
+        import VueRouter from "vue-router";
+        import { stringifyQuery, parseQuery } from "./utils/query";
+
+
+        Vue.use(VueRouter);
+
+        const routes = [];
+
+        const router = new VueRouter({
+            mode: 'history',
+            base: process.env.BASE_URL,
+            stringifyQuery: stringifyQuery, // 序列化query参数
+            parseQuery: parseQuery, // 反序列化query参数
+            routes
+        });
+
+        export default router
+
+    ```
+
+*   结构：
+
+    *   utils/encryption.js
+
+        文件提供加密和解密算法（默认在index.html中已经引入了crypto-js.js）
+        
+        *   getEncrypt 加密 对应的解密方法（getDecrypt）
+        *   getEncryptToBase64 加密后转base64 对应的解密方法（getDecryptByBase64）
+        *   getDecrypt 解密  对应的加密方法（getEncrypt）
+        *   getDecryptByBase64 对base64数据解密  先解析base64，在做解密 对应的加密方法（getEncryptToBase64）
+
+    *   utils/query.js
+
+        文件提供了序列化和反序列化的方法
+
+        *   stringifyQuery 序列化对象并 加密
+        *   parseQuery  解密 反序列化对象
+
 *   原理:
 
     >   在创建路由的时候，添加两个方法  
