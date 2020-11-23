@@ -2,7 +2,7 @@
  * 默认在html已经引入了  crypto-js.js  文件
  * 加密 解密
  */
-const baseCryptoCode = "这一段文字用来做给路由加密的私钥"; // 这个私钥每个项目指定一个唯一
+const baseCryptoCode = "这一段文字用来做给路由加密的私钥"; // 这个私钥每个项目指定一个唯一。更换密钥，请确认16位
 
 const getKeyHex = cryptoCode => CryptoJS.enc.Latin1.parse(cryptoCode || baseCryptoCode);
 
