@@ -10,6 +10,20 @@ const encode = str => encodeURIComponent(str)
 const decode = decodeURIComponent
 
 /**
+ * 判断字符串是否是base64
+ * @param { string } str 
+ * @returns { boolean }
+ */
+function isBase64(str) {
+    if (str ==='' || str.trim() ===''){ return false; }
+    try {
+        return btoa(atob(str)) == str;
+    } catch (err) {
+        return false;
+    }
+}
+
+/**
  * 序列化对象 并加密
  * @param {Object} obj 
  */
@@ -60,7 +74,7 @@ export const parseQuery = query => {
     }
 
     // 解密
-    query = decrypt(query);
+    query = isBase64(query) ? decrypt(query) : query;
     
     query.split('&').forEach(param => {
         const parts = param.replace(/\+/g, ' ').split('=')
