@@ -1,12 +1,18 @@
+// 按需引入 CryptoJS 需要的组件
+const CryptoJS = require('crypto-js/core')
+const Latin1 = require('crypto-js/enc-latin1')
+const AES = require('crypto-js/aes')
+const ZeroPadding = require('crypto-js/pad-zeropadding')
+const Utf8 = require('crypto-js/enc-utf8')
+const Base64 = require('crypto-js/enc-base64')
 /*
- * 默认在html已经引入了  crypto-js.js  文件
  * 加密 解密
  */
 const baseCryptoCode = "这一段文字用来做给路由加密的私钥"; // 这个私钥每个项目指定一个唯一。更换密钥，请确认16位
 
-const getKeyHex = cryptoCode => CryptoJS.enc.Latin1.parse(cryptoCode || baseCryptoCode);
+const getKeyHex = cryptoCode => Latin1.parse(cryptoCode || baseCryptoCode);
 
-const getIvHex = () => CryptoJS.enc.Latin1.parse(baseCryptoCode);
+const getIvHex = () => Latin1.parse(baseCryptoCode);
 
 /**
  * 加密
@@ -22,9 +28,9 @@ export const getEncrypt = (key, cryptoCode) => {
     } catch (e) {
         console.warn(e);
     }
-    return CryptoJS.AES.encrypt(key, keyHex, {
+    return AES.encrypt(key, keyHex, {
         mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.ZeroPadding,
+        padding: ZeroPadding,
         iv: ivHex
     }).toString();
 }
@@ -36,8 +42,8 @@ export const getEncrypt = (key, cryptoCode) => {
  */
 export const getEncryptToBase64 = (key, cryptoCode) => {
     let encryptStr = getEncrypt(key, cryptoCode);
-    let wordArray = CryptoJS.enc.Utf8.parse(encryptStr);
-    return CryptoJS.enc.Base64.stringify(wordArray);
+    let wordArray = Utf8.parse(encryptStr);
+    return Base64.stringify(wordArray);
 }
 
 /**
@@ -48,13 +54,13 @@ export const getEncryptToBase64 = (key, cryptoCode) => {
 export const getDecrypt = data => {
     let keyHex = getKeyHex();
     let ivHex = getIvHex();
-    let decrypted = CryptoJS.AES.decrypt({
-        ciphertext: CryptoJS.enc.Base64.parse(data)
+    let decrypted = AES.decrypt({
+        ciphertext: Base64.parse(data)
     }, keyHex, {
         mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.ZeroPadding,
+        padding: ZeroPadding,
         iv: ivHex
-    }).toString(CryptoJS.enc.Utf8);
+    }).toString(Utf8);
     try {
         decrypted = JSON.parse(decrypted);
     } catch (e) {
@@ -69,7 +75,7 @@ export const getDecrypt = data => {
  * @returns {string}
  */
 export const getDecryptByBase64 = data => {
-    let parsedWordArray = CryptoJS.enc.Base64.parse(data);
-    let decryptStr = parsedWordArray.toString(CryptoJS.enc.Utf8);
+    let parsedWordArray = Base64.parse(data);
+    let decryptStr = parsedWordArray.toString(Utf8);
     return getDecrypt(decryptStr);
 }

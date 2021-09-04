@@ -2,6 +2,16 @@
 
 *   使用：
 
+    * 加密需要依赖 `crypto-js` 库，安装：  
+    npm:
+    ```bash
+    npm install crypto-js --save
+    ```
+    yarn:
+    ```bash
+    yarn add crypto-js
+    ```
+
     *   将`utils`文件夹放入项目 **（最好是放在router目录下 ）** 中，在router的初始化文件中，引入`utils/query.js`的`stringifyQuery`和`parseQuery`方法，在`new VueRouter`是时候传递参数，
 
     *   修改`utils/encryption.js`中的`baseCryptoCode`设置每个项目唯一的值
